@@ -1,0 +1,461 @@
+### 1. Discuss about the various transmission media (10 marks)
+
+Transmission media are the physical pathways that connect computers, other devices, and people on a network. They can be categorized into two broad types: guided (wired) and unguided (wireless).
+
+**Guided Media:**
+1. **Twisted Pair Cable:**
+   - **Unshielded Twisted Pair (UTP):** Commonly used in telecommunication networks, consisting of pairs of wires twisted together to reduce interference.
+   - **Shielded Twisted Pair (STP):** Similar to UTP but includes shielding to provide better protection against interference.
+
+2. **Coaxial Cable:**
+   - Consists of a central conductor, insulating layer, metallic shield, and outer cover. Used in television and internet connections.
+
+3. **Fiber Optic Cable:**
+   - Uses light to transmit data, offering high bandwidth and long-distance capabilities. Types include Single-mode and Multi-mode fibers.
+
+**Unguided Media:**
+1. **Radio Waves:**
+   - Used for wireless communication, including Wi-Fi, cellular networks, and satellite communications.
+
+2. **Microwaves:**
+   - Used for long-distance communications and satellite transmissions, requiring line-of-sight paths.
+
+3. **Infrared:**
+   - Used for short-range communication, like remote controls and some wireless peripheral devices.
+
+Each type of media has its advantages and limitations in terms of bandwidth, distance, cost, and installation complexity.
+
+### 2. What is the utility of a Network Interface Card? (10 marks)
+
+A Network Interface Card (NIC) is a hardware component that connects a computer to a network. It plays a critical role in networking for the following reasons:
+
+1. **Physical Connection:**
+   - Provides a physical connection point to the network via Ethernet or wireless standards.
+
+2. **Data Link Layer Functions:**
+   - Manages the data link layer's tasks, such as framing, error detection, and correction.
+
+3. **MAC Address Provision:**
+   - Each NIC has a unique MAC address that helps in identifying devices on a local network.
+
+4. **Data Transmission:**
+   - Converts data from the computer into a form suitable for transmission over the network and vice versa.
+
+5. **Speed and Bandwidth:**
+   - NICs determine the speed and bandwidth capabilities of a network connection, supporting standards like Fast Ethernet, Gigabit Ethernet, etc.
+
+6. **Full-Duplex and Half-Duplex:**
+   - Supports both full-duplex (simultaneous send/receive) and half-duplex (send or receive at one time) modes.
+
+NICs are essential for enabling network communication, providing interfaces for wired and wireless connections, and supporting network protocols.
+
+### 3. Write down the difference between logical address and physical address (10 marks)
+
+**Logical Address:**
+1. **Definition:**
+   - A logical address is an address used by a computer program to access a particular memory location, primarily used in the context of network layer addressing (IP addresses).
+
+2. **Usage:**
+   - Used for routing packets across different networks. It is changeable and assigned by network administrators.
+
+3. **Example:**
+   - IP address (e.g., 192.168.1.1).
+
+4. **Scope:**
+   - Operates at the Network Layer of the OSI model.
+
+**Physical Address:**
+1. **Definition:**
+   - A physical address is a fixed address assigned to a network interface card (NIC) at the data link layer, often referred to as the MAC address.
+
+2. **Usage:**
+   - Used to identify devices within the same network segment. It is typically permanent and hardcoded into the NIC.
+
+3. **Example:**
+   - MAC address (e.g., 00:1A:2B:3C:4D:5E).
+
+4. **Scope:**
+   - Operates at the Data Link Layer of the OSI model.
+
+**Key Differences:**
+- Logical addresses are changeable and used for routing, while physical addresses are fixed and used for device identification within a local network.
+- Logical addresses are part of the Network Layer, whereas physical addresses belong to the Data Link Layer.
+
+### 4. Compare between various network topologies (10 marks)
+
+Network topologies define the layout of a network and how devices are interconnected. The main types are:
+
+1. **Bus Topology:**
+   - **Structure:** Single central cable (the bus) with terminators at each end.
+   - **Advantages:** Easy to install, requires less cable.
+   - **Disadvantages:** Difficult to troubleshoot, limited cable length and number of nodes, collisions can occur.
+
+2. **Star Topology:**
+   - **Structure:** All devices connected to a central hub or switch.
+   - **Advantages:** Easy to install and manage, failures in one cable do not affect others, easy to troubleshoot.
+   - **Disadvantages:** Central device failure affects the entire network, higher cable cost.
+
+3. **Ring Topology:**
+   - **Structure:** Devices connected in a circular fashion, data travels in one direction.
+   - **Advantages:** Equal access to resources, predictable performance under heavy load.
+   - **Disadvantages:** A single break can disrupt the network, difficult to troubleshoot and reconfigure.
+
+4. **Mesh Topology:**
+   - **Structure:** Every device is connected to every other device.
+   - **Advantages:** High redundancy and reliability, robust to failures.
+   - **Disadvantages:** Expensive and complex to install, requires a lot of cables.
+
+5. **Tree Topology:**
+   - **Structure:** A hybrid topology combining star and bus characteristics, with groups of star-configured networks connected to a linear bus backbone.
+   - **Advantages:** Scalable, easy to add new devices.
+   - **Disadvantages:** If the backbone fails, the entire network segment is affected.
+
+6. **Hybrid Topology:**
+   - **Structure:** Combination of two or more different topologies.
+   - **Advantages:** Flexible and scalable, combines benefits of various topologies.
+   - **Disadvantages:** Can be complex and expensive to design and maintain.
+
+Each topology has unique benefits and drawbacks, making them suitable for different types of networks based on size, scale, and specific requirements.
+
+### 5. Write a short note on Telnet (10 marks)
+
+Telnet is a network protocol used to provide a command-line interface for communication with remote devices and servers. It operates on the client-server model and uses TCP port 23.
+
+**Features of Telnet:**
+1. **Remote Access:**
+   - Allows users to remotely log in to another computer over a network, simulating a local session on the remote system.
+
+2. **Command Execution:**
+   - Users can execute commands on the remote machine as if they were physically present at the machine.
+
+3. **Platform Independence:**
+   - Telnet clients and servers are available for various operating systems, providing cross-platform compatibility.
+
+4. **Text-Based Communication:**
+   - Telnet provides a text-based communication channel, making it lightweight and efficient for remote management tasks.
+
+**Advantages:**
+- **Simplicity:** Easy to use for quick remote management.
+- **Compatibility:** Widely supported across different systems and devices.
+
+**Disadvantages:**
+- **Security:** Lacks encryption, making it vulnerable to eavesdropping and man-in-the-middle attacks.
+- **Obsolescence:** Modern protocols like SSH have largely replaced Telnet due to their enhanced security features.
+
+**Usage:**
+Telnet is commonly used for:
+- Network diagnostics and troubleshooting.
+- Accessing network equipment and servers.
+- Configuring devices like routers and switches.
+
+Despite its simplicity and usefulness, Telnet's security limitations have led to a decline in its usage in favor of more secure alternatives.
+
+### 6. Discuss about firewalls (10 marks)
+
+A firewall is a network security device or software that monitors and controls incoming and outgoing network traffic based on predetermined security rules.
+
+**Types of Firewalls:**
+1. **Packet-Filtering Firewalls:**
+   - Analyze packets' headers to decide whether to allow or block traffic based on IP addresses, port numbers, and protocols.
+
+2. **Stateful Inspection Firewalls:**
+   - Track the state of active connections and make decisions based on the context of traffic.
+
+3. **Proxy Firewalls:**
+   - Act as intermediaries between end-users and the services they access, providing an additional layer of security by hiding the network's internal structure.
+
+4. **Next-Generation Firewalls (NGFW):**
+   - Combine traditional firewall functions with additional features like deep packet inspection, intrusion prevention systems (IPS), and application awareness.
+
+**Functions and Benefits:**
+1. **Traffic Monitoring:**
+   - Inspects incoming and outgoing traffic to ensure it meets security policies.
+   
+2. **Access Control:**
+   - Restricts access to network resources based on security rules, preventing unauthorized access.
+
+3. **Threat Prevention:**
+   - Blocks malicious traffic, including viruses, worms, and other threats.
+
+4. **Network Segmentation:**
+   - Divides a network into segments to control traffic flow and enhance security.
+
+**Advantages:**
+- Enhances network security by controlling traffic.
+- Prevents unauthorized access and attacks.
+- Protects sensitive data and resources.
+
+**Disadvantages:**
+- Can become a bottleneck if not properly managed.
+- Requires regular updates and management to remain effective.
+
+Firewalls are essential components of network security, providing critical protection against a wide range of cyber threats.
+
+### 7. Write down the steps to configure File Transfer Protocol (10 marks)
+
+Configuring an FTP server involves several steps to ensure secure and efficient file transfer services. Here's a general guide:
+
+1. **Install FTP Server Software:**
+   - Choose and install FTP server software like vsftpd (Linux), FileZilla Server (Windows), or ProFTPD (Linux).
+
+2. **Configure FTP Server:**
+   - Edit
+
+ the configuration file (e.g., `/etc/vsftpd.conf` for vsftpd) to set parameters like:
+     - Anonymous access (enable/disable).
+     - Local user access.
+     - Chroot settings to restrict users to their home directories.
+     - Passive mode settings.
+
+3. **Create FTP Users:**
+   - Add users to the system with appropriate permissions. For Linux, use commands like `adduser` to create a user.
+
+4. **Set Permissions:**
+   - Configure file and directory permissions to control access levels. Use `chmod` and `chown` commands on Linux to set permissions.
+
+5. **Start the FTP Service:**
+   - Start and enable the FTP service to run at boot. For example, use `systemctl start vsftpd` and `systemctl enable vsftpd` on Linux.
+
+6. **Firewall Configuration:**
+   - Open the necessary ports (default is 21 for FTP) in the firewall to allow FTP traffic. Use `iptables` or firewall management tools to open ports.
+
+7. **Test the FTP Server:**
+   - Use an FTP client (like FileZilla) to connect to the server and test file upload/download functionality.
+
+8. **Secure the FTP Server:**
+   - Implement security measures such as:
+     - Using FTPS (FTP over SSL/TLS) for encrypted connections.
+     - Disabling anonymous access if not needed.
+     - Regularly updating the FTP software to patch vulnerabilities.
+
+### 8. Write a short note on DNS (10 marks)
+
+The Domain Name System (DNS) is a hierarchical and decentralized naming system for computers, services, or any resource connected to the internet or a private network. It translates human-friendly domain names (e.g., www.example.com) into IP addresses (e.g., 192.0.2.1).
+
+**Components of DNS:**
+1. **Domain Names:**
+   - Structured in a hierarchy with different levels (e.g., top-level domains like .com, .org).
+
+2. **DNS Servers:**
+   - **Root Servers:** The top level of the DNS hierarchy, handling root zone.
+   - **Top-Level Domain (TLD) Servers:** Manage domains under a specific TLD.
+   - **Authoritative Name Servers:** Provide answers to DNS queries about domains they are responsible for.
+   - **Recursive Resolvers:** Intermediaries that query other DNS servers on behalf of the client.
+
+**DNS Records:**
+1. **A Record:** Maps a domain to an IPv4 address.
+2. **AAAA Record:** Maps a domain to an IPv6 address.
+3. **CNAME Record:** Alias one name to another (canonical name).
+4. **MX Record:** Specifies mail exchange servers for email services.
+5. **TXT Record:** Holds text information, often used for verification purposes.
+
+**Process:**
+1. **Query:** A user types a domain name in their browser.
+2. **Resolver:** The query goes to a recursive resolver, which queries DNS servers in sequence (root, TLD, authoritative) to get the IP address.
+3. **Response:** The IP address is returned to the resolver, which then sends it to the user's device, allowing the browser to connect to the server.
+
+**Advantages:**
+- **Ease of Use:** Users can use easy-to-remember domain names instead of numeric IP addresses.
+- **Scalability:** Supports a vast number of domains and addresses.
+- **Redundancy:** Multiple DNS servers provide redundancy and reliability.
+
+DNS is fundamental to internet functionality, providing the critical service of translating domain names to IP addresses, ensuring users can easily access websites and services.
+
+### 9. Compare between Hub, Switch, and Router (10 marks)
+
+**Hub:**
+1. **Function:**
+   - A hub is a basic networking device that connects multiple devices in a network, making them act as a single network segment.
+
+2. **Data Handling:**
+   - Broadcasts data to all connected devices, regardless of the destination.
+
+3. **Layer:**
+   - Operates at the Physical Layer (Layer 1) of the OSI model.
+
+4. **Intelligence:**
+   - No data filtering or routing capabilities.
+
+5. **Usage:**
+   - Suitable for small, simple networks but is largely obsolete due to inefficiency.
+
+**Switch:**
+1. **Function:**
+   - A switch connects devices in a network and uses MAC addresses to forward data to the correct destination device.
+
+2. **Data Handling:**
+   - Sends data only to the device for which it is intended, reducing collisions and improving network efficiency.
+
+3. **Layer:**
+   - Operates at the Data Link Layer (Layer 2) and sometimes Network Layer (Layer 3) for Layer 3 switches.
+
+4. **Intelligence:**
+   - Maintains a MAC address table to manage data transmission.
+
+5. **Usage:**
+   - Common in modern LANs, providing better performance and security than hubs.
+
+**Router:**
+1. **Function:**
+   - A router connects different networks and directs data between them. It routes data from one network to another based on IP addresses.
+
+2. **Data Handling:**
+   - Determines the best path for data to travel across networks.
+
+3. **Layer:**
+   - Operates at the Network Layer (Layer 3) of the OSI model.
+
+4. **Intelligence:**
+   - Maintains routing tables and uses algorithms to determine the best routes for data.
+
+5. **Usage:**
+   - Essential for connecting different networks, such as LANs to the internet, and managing traffic between them.
+
+**Comparison:**
+- **Hub:** Simple, broadcasts data, no intelligence, used for small networks.
+- **Switch:** Smarter, sends data to specific devices, efficient, used in LANs.
+- **Router:** Most intelligent, routes data between networks, used for inter-network communication.
+
+### 10. Discuss various types of cable used in computer networks (10 marks)
+
+Different types of cables are used in computer networks to connect devices and enable communication. The main types are:
+
+1. **Twisted Pair Cable:**
+   - **Unshielded Twisted Pair (UTP):**
+     - Commonly used in Ethernet networks.
+     - Categories include Cat5e, Cat6, and Cat6a, with varying bandwidth and performance.
+   - **Shielded Twisted Pair (STP):**
+     - Similar to UTP but with shielding to reduce electromagnetic interference (EMI).
+     - Used in environments with high interference.
+
+2. **Coaxial Cable:**
+   - Consists of a central conductor, insulating layer, metallic shield, and outer cover.
+   - Types include RG-6 (used for cable TV and internet) and RG-59 (used for CCTV).
+   - Offers good bandwidth and EMI resistance but is bulky and less flexible than twisted pair.
+
+3. **Fiber Optic Cable:**
+   - Uses light to transmit data, offering high bandwidth and long-distance capabilities.
+   - **Single-Mode Fiber (SMF):**
+     - Suitable for long-distance communication with higher bandwidth.
+   - **Multi-Mode Fiber (MMF):**
+     - Suitable for shorter distances with multiple light paths.
+
+4. **Ethernet Cables:**
+   - Specific type of twisted pair cable used for wired networking.
+   - Categories include Cat5e (up to 1 Gbps), Cat6 (up to 10 Gbps for short distances), and Cat6a (improved performance over longer distances).
+
+**Advantages and Use Cases:**
+1. **Twisted Pair:**
+   - **Advantages:** Inexpensive, flexible, easy to install.
+   - **Use Cases:** Local Area Networks (LANs), telephone networks.
+
+2. **Coaxial Cable:**
+   - **Advantages:** Good EMI resistance, reliable.
+   - **Use Cases:** Cable TV, internet connections, older Ethernet networks.
+
+3. **Fiber Optic Cable:**
+   - **Advantages:** High bandwidth, long-distance transmission, immune to EMI.
+   - **Use Cases:** Backbone networks, long-distance communication, high-speed internet.
+
+Different cables are chosen based on the specific requirements of network performance, distance, and environmental factors.
+
+### 11. Discuss about client-server communication paradigm (10 marks)
+
+The client-server communication paradigm is a foundational model for network computing, where tasks and workloads are distributed between service providers (servers) and service requesters (clients).
+
+**Components:**
+1. **Client:**
+   - A client is a device or software that requests services or resources from a server. Examples include web browsers, email clients, and FTP clients.
+
+2. **Server:**
+   - A server is a powerful computer or software that provides services, resources, or data to clients. Examples include web servers, database servers, and application servers.
+
+**Communication Process:**
+1. **Request:**
+   - The client initiates communication by sending a request to the server for specific data or services.
+   
+2. **Processing:**
+   - The server receives the request, processes it, and performs the necessary operations (e.g., retrieving data from a database).
+
+3. **Response:**
+   - The server sends the requested data or the result of the operations back to the client.
+
+**Advantages:**
+1. **Centralized Management:**
+   - Servers centralize data and services, simplifying management and maintenance.
+   
+2. **Scalability:**
+   - Easy to scale by adding more clients or upgrading server resources.
+
+3. **Security:**
+   - Centralized control allows for better security measures and data integrity.
+
+4. **Resource Sharing:**
+   - Efficient resource utilization by sharing server resources among multiple clients.
+
+**Disadvantages:**
+1. **Server Dependency:**
+   - The entire system depends on the server's availability. Server failure can disrupt services for all clients.
+
+2. **Scalability Limits:**
+   - Overloading the server with too many client requests can
+
+ degrade performance.
+
+3. **Cost:**
+   - High initial cost for setting up and maintaining powerful server hardware and software.
+
+**Examples:**
+- **Web Browsing:** A web browser (client) requests a webpage from a web server.
+- **Email Services:** An email client requests emails from an email server.
+- **Database Access:** An application requests data from a database server.
+
+The client-server paradigm is widely used due to its efficiency, scalability, and centralized control, making it suitable for various applications ranging from simple web services to complex enterprise systems.
+
+### 12. Differentiate between unicast, broadcast, and multicast forms of message deliveries (10 marks)
+
+**Unicast:**
+1. **Definition:**
+   - Unicast is a one-to-one communication where a message is sent from a single sender to a single receiver.
+
+2. **Usage:**
+   - Common in everyday internet usage such as web browsing, file transfers, and emails.
+
+3. **Advantages:**
+   - Efficient use of network resources for individual communications.
+
+4. **Disadvantages:**
+   - Does not scale well for applications requiring the same data to be sent to multiple recipients.
+
+**Broadcast:**
+1. **Definition:**
+   - Broadcast is a one-to-all communication where a message is sent from a single sender to all devices in the network segment.
+
+2. **Usage:**
+   - Used in network discovery protocols, ARP (Address Resolution Protocol), and DHCP (Dynamic Host Configuration Protocol).
+
+3. **Advantages:**
+   - Effective for sending data to all devices in a network simultaneously.
+
+4. **Disadvantages:**
+   - Can lead to network congestion and inefficiency as all devices receive the broadcast regardless of whether they need the data.
+
+**Multicast:**
+1. **Definition:**
+   - Multicast is a one-to-many communication where a message is sent from a single sender to multiple specified receivers in a network.
+
+2. **Usage:**
+   - Used in applications like live streaming, video conferencing, and IPTV.
+
+3. **Advantages:**
+   - Efficient use of network resources by sending data only to subscribed recipients.
+
+4. **Disadvantages:**
+   - More complex to implement and manage compared to unicast and broadcast.
+
+**Comparison:**
+- **Unicast:** Suitable for individual communications, efficient for point-to-point connections.
+- **Broadcast:** Suitable for network-wide communications, can cause unnecessary network traffic.
+- **Multicast:** Suitable for group communications, efficient for one-to-many distribution without overloading the network.
+
+Each form of message delivery has its specific use cases, advantages, and limitations, making them appropriate for different types of network communication scenarios.

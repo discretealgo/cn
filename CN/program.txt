@@ -1,0 +1,590 @@
+### 1. Program to find out the IP address of the local and remote machines
+
+```java
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class IPAddress {
+    public static void main(String[] args) {
+        try {
+            // Local machine IP address
+            InetAddress localIP = InetAddress.getLocalHost();
+            System.out.println("Local IP Address: " + localIP.getHostAddress());
+
+            // Remote machine IP address
+            InetAddress remoteIP = InetAddress.getByName("www.example.com");
+            System.out.println("Remote IP Address: " + remoteIP.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 2. Program to implement sliding window protocol
+
+```java
+import java.util.Scanner;
+
+public class SlidingWindowProtocol {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the total number of frames: ");
+        int totalFrames = scanner.nextInt();
+
+        System.out.print("Enter the window size: ");
+        int windowSize = scanner.nextInt();
+
+        int[] frames = new int[totalFrames];
+        for (int i = 0; i < totalFrames; i++) {
+            frames[i] = i + 1;
+        }
+
+        int ack = 0;
+        while (ack < totalFrames) {
+            System.out.println("Sending frames:");
+            for (int i = 0; i < windowSize && ack + i < totalFrames; i++) {
+                System.out.println("Frame " + frames[ack + i]);
+            }
+
+            System.out.print("Enter the number of acknowledgments received: ");
+            int acksReceived = scanner.nextInt();
+            ack += acksReceived;
+
+            System.out.println("Acknowledged up to frame " + ack);
+        }
+
+        System.out.println("All frames have been acknowledged.");
+    }
+}
+```
+
+### 3. Server program to implement selective repeat ARQ
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class SelectiveRepeatARQServer {
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(8080)) {
+            System.out.println("Server started. Waiting for client...");
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connected.");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            int totalFrames = Integer.parseInt(in.readLine());
+            boolean[] received = new boolean[totalFrames];
+            int windowSize = 4; // Example window size
+
+            while (true) {
+                String input = in.readLine();
+                if (input.equals("END")) break;
+
+                int frame = Integer.parseInt(input);
+                if (frame < totalFrames && !received[frame]) {
+                    received[frame] = true;
+                    System.out.println("Received frame: " + frame);
+                    out.println("ACK " + frame);
+                }
+            }
+
+            System.out.println("All frames received. Sending cumulative acknowledgment...");
+            for (int i = 0; i < totalFrames; i++) {
+                if (!received[i]) {
+                    System.out.println("Frame " + i + " not received.");
+                }
+            }
+
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 4. Server program to create a server-side socket and send the current date and time to the client
+
+```java
+import java.io.*;
+import java.net.*;
+import java.util.Date;
+
+public class DateTimeServer {
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(8080)) {
+            System.out.println("Server started. Waiting for client...");
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connected.");
+
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println(new Date().toString());
+
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 5. Program to find the starting network ID of each subnet
+
+```java
+import java.util.Scanner;
+
+public class SubnetCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the IP address: ");
+        String ipAddress = scanner.nextLine();
+
+        System.out.print("Enter the subnet mask: ");
+        String subnetMask = scanner.nextLine();
+
+        int[] ip = parseIPAddress(ipAddress);
+        int[] mask = parseIPAddress(subnetMask);
+        int[] networkID = new int[4];
+
+        for (int i = 0; i < 4; i++) {
+            networkID[i] = ip[i] & mask[i];
+        }
+
+        System.out.println("Network ID: " + formatIPAddress(networkID));
+    }
+
+    private static int[] parseIPAddress(String ipAddress) {
+        String[] parts = ipAddress.split("\\.");
+        int[] ip = new int[4];
+        for (int i = 0; i < 4; i++) {
+            ip[i] = Integer.parseInt(parts[i]);
+        }
+        return ip;
+    }
+
+    private static String formatIPAddress(int[] ip) {
+        return ip[0] + "." + ip[1] + "." + ip[2] + "." + ip[3];
+    }
+}
+```
+
+### 6. Programs to create client and server-side sockets and implement multicasting
+
+**Server Program:**
+
+```java
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+
+public class MulticastServer {
+    public static void main(String[] args) {
+        String multicastAddress = "224.0.0.1";
+        int port = 5000;
+
+        try (MulticastSocket multicastSocket = new MulticastSocket()) {
+            InetAddress group = InetAddress.getByName(multicastAddress);
+
+            String message = "Hello, Multicast!";
+            DatagramPacket packet = new DatagramPacket(message.getBytes(), message.length(), group, port);
+
+            multicastSocket.send(packet);
+            System.out.println("Multicast message sent.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Client Program:**
+
+```java
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+
+public class MulticastClient {
+    public static void main(String[] args) {
+        String multicastAddress = "224.0.0.1";
+        int port = 5000;
+
+        try (MulticastSocket multicastSocket = new MulticastSocket(port)) {
+            InetAddress group = InetAddress.getByName(multicastAddress);
+            multicastSocket.joinGroup(group);
+
+            byte[] buffer = new byte[256];
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+            System.out.println("Waiting for multicast message...");
+            multicastSocket.receive(packet);
+
+            String message = new String(packet.getData(), 0, packet.getLength());
+            System.out.println("Received multicast message: " + message);
+
+            multicastSocket.leaveGroup(group);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 7. Program to find the class of a given IP address and its Network ID and Host ID
+
+```java
+import java.util.Scanner;
+
+public class IPAddressInfo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the IP address: ");
+        String ipAddress = scanner.nextLine();
+
+        int[] ip = parseIPAddress(ipAddress);
+
+        String ipClass = findIPClass(ip);
+        String networkID = findNetworkID(ip, ipClass);
+        String hostID = findHostID(ip, ipClass);
+
+        System.out.println("IP Class: " + ipClass);
+        System.out.println("Network ID: " + networkID);
+        System.out.println("Host ID: " + hostID);
+    }
+
+    private static int[] parseIPAddress(String ipAddress) {
+        String[] parts = ipAddress.split("\\.");
+        int[] ip = new int[4];
+        for (int i = 0; i < 4; i++) {
+            ip[i] = Integer.parseInt(parts[i]);
+        }
+        return ip;
+    }
+
+    private static String findIPClass(int[] ip) {
+        int firstOctet = ip[0];
+        if (firstOctet >= 1 && firstOctet <= 126) {
+            return "A";
+        } else if (firstOctet >= 128 && firstOctet <= 191) {
+            return "B";
+        } else if (firstOctet >= 192 && firstOctet <= 223) {
+            return "C";
+        } else if (firstOctet >= 224 && firstOctet <= 239) {
+            return "D";
+        } else {
+            return "E";
+        }
+    }
+
+    private static String findNetworkID(int[] ip, String ipClass) {
+        if (ipClass.equals("A")) {
+            return ip[0] + ".0.0.0";
+        } else if (ipClass.equals("B")) {
+            return ip[0] + "." + ip[1] + ".0.0";
+        } else if (ipClass.equals("C")) {
+            return ip[0] + "." + ip[1] + "." + ip[2] + ".0";
+        } else {
+            return "N/A";
+        }
+    }
+
+    private static String findHostID(int[] ip, String ipClass) {
+        if (ipClass
+
+.equals("A")) {
+            return "0." + ip[1] + "." + ip[2] + "." + ip[3];
+        } else if (ipClass.equals("B")) {
+            return "0.0." + ip[2] + "." + ip[3];
+        } else if (ipClass.equals("C")) {
+            return "0.0.0." + ip[3];
+        } else {
+            return "N/A";
+        }
+    }
+}
+```
+
+### 8. Programs to create client and server-side sockets to convert a string to uppercase
+
+**Server Program:**
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class UppercaseServer {
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(8080)) {
+            System.out.println("Server started. Waiting for client...");
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connected.");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            String input = in.readLine();
+            String uppercase = input.toUpperCase();
+            out.println(uppercase);
+
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Client Program:**
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class UppercaseClient {
+    public static void main(String[] args) {
+        try (Socket socket = new Socket("localhost", 8080)) {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            String input = "hello world";
+            out.println(input);
+
+            String response = in.readLine();
+            System.out.println("Received from server: " + response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 9. Program to implement Stop and Wait ARQ protocol
+
+```java
+import java.util.Scanner;
+
+public class StopAndWaitARQ {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the total number of frames: ");
+        int totalFrames = scanner.nextInt();
+
+        int sentFrame = 0;
+        while (sentFrame < totalFrames) {
+            System.out.println("Sending frame: " + sentFrame);
+            System.out.print("Was the frame received correctly (yes/no)? ");
+            String response = scanner.next();
+
+            if (response.equalsIgnoreCase("yes")) {
+                sentFrame++;
+            }
+
+            System.out.println("Acknowledgment received for frame: " + (sentFrame - 1));
+        }
+
+        System.out.println("All frames have been sent and acknowledged.");
+    }
+}
+```
+
+### 10. Program to input an IP address and print its class and network address
+
+```java
+import java.util.Scanner;
+
+public class IPAddressDetails {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the IP address: ");
+        String ipAddress = scanner.nextLine();
+
+        int[] ip = parseIPAddress(ipAddress);
+
+        String ipClass = findIPClass(ip);
+        String networkAddress = findNetworkAddress(ip, ipClass);
+
+        System.out.println("IP Class: " + ipClass);
+        System.out.println("Network Address: " + networkAddress);
+    }
+
+    private static int[] parseIPAddress(String ipAddress) {
+        String[] parts = ipAddress.split("\\.");
+        int[] ip = new int[4];
+        for (int i = 0; i < 4; i++) {
+            ip[i] = Integer.parseInt(parts[i]);
+        }
+        return ip;
+    }
+
+    private static String findIPClass(int[] ip) {
+        int firstOctet = ip[0];
+        if (firstOctet >= 1 && firstOctet <= 126) {
+            return "A";
+        } else if (firstOctet >= 128 && firstOctet <= 191) {
+            return "B";
+        } else if (firstOctet >= 192 && firstOctet <= 223) {
+            return "C";
+        } else if (firstOctet >= 224 && firstOctet <= 239) {
+            return "D";
+        } else {
+            return "E";
+        }
+    }
+
+    private static String findNetworkAddress(int[] ip, String ipClass) {
+        if (ipClass.equals("A")) {
+            return ip[0] + ".0.0.0";
+        } else if (ipClass.equals("B")) {
+            return ip[0] + "." + ip[1] + ".0.0";
+        } else if (ipClass.equals("C")) {
+            return ip[0] + "." + ip[1] + "." + ip[2] + ".0";
+        } else {
+            return "N/A";
+        }
+    }
+}
+```
+
+### 11. Programs to create client and server-side sockets to implement Echo Service
+
+**Server Program:**
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class EchoServer {
+    public static void main(String[] args) {
+        try (ServerSocket serverSocket = new ServerSocket(8080)) {
+            System.out.println("Server started. Waiting for client...");
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connected.");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            String input;
+            while ((input = in.readLine()) != null) {
+                out.println("Echo: " + input);
+            }
+
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Client Program:**
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class EchoClient {
+    public static void main(String[] args) {
+        try (Socket socket = new Socket("localhost", 8080)) {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+            String userInput;
+            System.out.println("Type a message (type 'exit' to quit):");
+            while (!(userInput = stdIn.readLine()).equalsIgnoreCase("exit")) {
+                out.println(userInput);
+                System.out.println(in.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 12. Program to implement error detection at the Data Link Layer using Cyclic Redundancy Check (CRC)
+
+```java
+import java.util.Scanner;
+
+public class CRC {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the data: ");
+        String data = scanner.nextLine();
+
+        System.out.print("Enter the generator polynomial: ");
+        String generator = scanner.nextLine();
+
+        String codeword = generateCRC(data, generator);
+        System.out.println("Codeword: " + codeword);
+
+        System.out.print("Enter the received codeword: ");
+        String received = scanner.nextLine();
+
+        boolean isValid = checkCRC(received, generator);
+        if (isValid) {
+            System.out.println("No error detected.");
+        } else {
+            System.out.println("Error detected.");
+        }
+    }
+
+    private static String generateCRC(String data, String generator) {
+        int dataLength = data.length();
+        int genLength = generator.length();
+
+        String dividend = data + "0".repeat(genLength - 1);
+        String remainder = divide(dividend, generator);
+
+        return data + remainder;
+    }
+
+    private static boolean checkCRC(String received, String generator) {
+        String remainder = divide(received, generator);
+        return remainder.equals("0".repeat(generator.length() - 1));
+    }
+
+    private static String divide(String dividend, String divisor) {
+        int divisorLength = divisor.length();
+        String remainder = dividend.substring(0, divisorLength);
+
+        for (int i = divisorLength; i <= dividend.length(); i++) {
+            if (remainder.charAt(0) == '1') {
+                remainder = xor(remainder, divisor);
+            }
+
+            if (i < dividend.length()) {
+                remainder = remainder.substring(1) + dividend.charAt(i);
+            } else {
+                remainder = remainder.substring(1);
+            }
+        }
+
+        return remainder;
+    }
+
+    private static String xor(String a, String b) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < a.length(); i++) {
+            result.append(a.charAt(i) == b.charAt(i) ? '0' : '1');
+        }
+
+        return result.toString();
+    }
+}
+```
+
+These programs cover a range of networking concepts and protocols implemented in Java. Make sure to run the server programs first before the client programs to establish the communication correctly.
